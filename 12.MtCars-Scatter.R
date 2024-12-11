@@ -1,16 +1,17 @@
-# Load the required ggplot2 package
-library(ggplot2)
-
 # Load the mtcars dataset
 data(mtcars)
 
-# Create the scatterplot with color based on cyl and add a smooth trend line
-ggplot(mtcars, aes(x = disp, y = mpg, color = factor(cyl))) + 
-  geom_point(size = 3) +  # Scatter plot with points
-  geom_smooth(method = "lm", se = FALSE, aes(color = factor(cyl))) +  # Add smooth line (linear model)
-  labs(x = "Displacement (disp)", 
-       y = "Miles per Gallon (mpg)", 
-       title = "Scatterplot of mpg vs disp with Trend Line by cyl",
-       color = "Number of Cylinders") +  # Labels and title
-  theme_minimal() +  # Minimal theme
-  theme(legend.position = "top")  # Position the legend at the top
+# Create a scatterplot of Displacement vs. MPG with points colored by cylinder count
+plot(x = mtcars$disp, y = mtcars$mpg,
+     xlab = "Engine Displacement (cu.in.)",
+     ylab = "Fuel Efficiency (MPG)",
+     main = "MPG vs Displacement with Cylinder Differentiation",
+     col = as.factor(mtcars$cyl),
+     pch = 16)
+
+# Add a smoothed line to the scatterplot
+lines(lowess(mtcars$disp, mtcars$mpg), col = "darkgray", lwd = 2)
+
+# Add a legend in the top-right corner to indicate cylinder groups
+legend("topright", legend = levels(as.factor(mtcars$cyl)),
+       col = 1:3, pch = 16, title = "Cylinder Count")
