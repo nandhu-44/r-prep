@@ -1,40 +1,31 @@
-para <- function() {
-  cat("Enter your paragraph:\n")
-  paragraph <- readline()
-  words <- unlist(strsplit(paragraph, "\\s+"))
-  # (a)
-  words_number <- length(words)
-  cat("\nThe total number of words =", words_number, "\n")
-  # (b)
-  word_len <- nchar(words)
-  avg_word_len <- mean(word_len)
-  cat("Average word length =", avg_word_len, "\n")
-  # (c)
-  longest_len <- max(word_len)
-  longest_word <- words[word_len == longest_len]
-  # longest_word <- longest_words[1]
-  # In case there are multiple words with the same length
-  cat("The longest word is:", longest_word, "\n")
-  # (d)
-  cat("Enter the word to be replaced: ")
-  replace <- readline()
-  cat("Enter the word to replace with: ")
-  new <- readline()
-  modified_para <- modified(replace, new, paragraph)
-  cat("The modified paragraph is:\n", modified_para, "\n")
-}
+# Develop a program to read a paragraph of text and perform the following tasks:
+# a) Count the total number of words
+# b) Calculate the average word length
+# c) Identify and print the longest word
+# d) Replace all occurrences of a specific word with another word of your choice
 
+content <- readLines("paragraph.txt")
 
-modified <- function(replace, new, paragraph) {
-  words <- unlist(strsplit(paragraph, "\\s+"))
-  mod <- sapply(words, function(word) {
-    if (word == replace) {
-      return(new)
-    } else {
-      return(word)
-    }
-  })
-  modified_para <- paste(mod, collapse = " ")
-  return(modified_para)
-}
-para()
+# Count the total number of words
+words <- unlist(strsplit(content, "\\s+"))
+word_count <- length(words)
+cat("\n\nWord Count:", word_count, "\n")
+
+# Calculate the average word length
+word_lengths <- nchar(words)
+average_word_length <- sum(word_lengths) / word_count
+cat("Average Word Length:", average_word_length, "\n")
+
+# Identify and print the longest word
+longest_word <- words[which.max(nchar(words))]
+cat("Longest Word:", longest_word, "\n")
+
+# Replace all occurrences of a specific word with another word of your choice
+word_to_replace <- "ipsum"
+replacement_word <- "🐼 IPSUM 🐼"
+
+content <- gsub(word_to_replace, replacement_word, content)
+
+# print the updated content
+cat("\n\nUpdated Content:\n")
+cat(content, sep = "\n")
